@@ -67,22 +67,22 @@ function! s:GetDocsetsList() abort " {{{1
 endfunction
 function! s:GetDocset(file, ext, ft) abort " {{{1
 	" Try to guess docset from:
-	" 1. file name
+	" 1. file type
 	" 2. file extension
-	" 3. file type
+	" 3. file name
 
 	for l:k in keys(s:docsetsDic)
 		" If the key starts with \v then we consider it as
 		" a regex, so we add magic!
 		let l:pattern = l:k =~# '\v^\^' ?
 					\ '\v' . l:k : l:k
-		if match(a:file, l:pattern) ==# 0
+		if match(a:ft, l:pattern) ==# 0
 			let l:docset = s:docsetsDic[l:k]
 			break
 		elseif match(a:ext, l:pattern) ==# 0
 			let l:docset = s:docsetsDic[l:k]
 			break
-		elseif match(a:ft, l:pattern) ==# 0
+		elseif match(a:file, l:pattern) ==# 0
 			let l:docset = s:docsetsDic[l:k]
 			break
 		else
